@@ -1,0 +1,94 @@
+﻿@model List<ItemSearchApp.Models.Item>
+@{
+    ViewBag.Title = "☆浜屋 商品検索☆";
+    string keyword = ViewBag.Keyword as string ?? "";
+    var matched = ViewBag.MatchedCategories as List<string> ?? new List<string>();
+}
+
+<h2>☆浜屋 商品検索☆</h2>
+<div class="container">
+
+    <div class="left-column">
+<form method="get">
+    <input type="text" name="keyword" value="@keyword" placeholder="キーワード入力" />
+    <button type="submit">検索</button>
+</form>
+
+@if (Model.Any())
+{
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr><th>品目</th><th>買取価格</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>該当するデータがありません。</p>
+}
+    </div>
+
+    <div class="right-column">
+        @if (matched.Contains("aircon"))
+        {
+            <h4>◆ エアコン</h4>
+            <p>対象メーカー：ダイキン、三菱電機、パナソニック、東芝、富士通、ナショナル</p>
+            <img src="~/images/image1.jpg" alt="参考画像" style="max-width: 100%;" />
+            <ul>
+                <li>2011年～：～2.4kW（100V）、2.5kW～（200V）</li>
+                <li>2010年以前：型式によって判断（MUZ-SV22T → 2.2kW、MUZ-GV251 → 2.5kW）</li>
+                <li>200Vは一部メーカーで他品目扱い</li>
+                <li>奥行き20cm以上の商品、R32冷媒は対象外</li>
+            </ul>
+        }
+
+        @if (matched.Contains("fridge"))
+        {
+            <h5>◆ 大型冷蔵庫</h5>
+            <img src="~/images/image2.jpg" alt="参考画像" style="max-width: 100%;" />
+            <ul>
+                <li>※サビ・傷・棚欠品 NG、棚や野菜ケースが揃っていること</li>
+                <li>内部の清掃必須</li>
+            </ul>
+        }
+
+        @if (matched.Contains("mini_fridge"))
+        {
+            <h5>◆ ミニ冷蔵庫</h5>
+            <ul>
+                <li>年式：2000年以降</li>
+                <li>横幅60cm以下、高さ90cm以上～164cm以下</li>
+                <li>メーカー不問</li>
+            </ul>
+        }
+
+        @if (matched.Contains("tv"))
+        {
+            <h5>◆ 液晶テレビ</h5>
+            <img src="~/images/image3.jpg" alt="参考画像" style="max-width: 100%;" />
+            <p>※【液晶テレビ共通基準】チューナー外付け・プラズマテレビはNG</p>
+        }
+
+        @if (matched.Contains("metal"))
+        {
+            <h5>◆ レアメタル関係スクラップ</h5>
+            <p>※MIXでお持ち込みいただいた場合は、MIX基板カテゴリ扱いになります。事前の仕分けをお願いします。</p>
+        }
+
+        @if (matched.Contains("hdd"))
+        {
+            <h5>◆ HDDリユース</h5>
+            <p>※通電検査が必要です。検査に時間がかかるため、大量持込時はお預かりになる場合があります。</p>
+            <p>※検査NG、汚れ・サビがひどいものは対象外</p>
+        }
+    </div>
+</div>
