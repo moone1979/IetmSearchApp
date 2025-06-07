@@ -11,8 +11,20 @@ namespace ItemSearchApp.Helpers
 
             var items = new List<Item>();
 
+            if (!File.Exists(filePath))
+            {
+                // ファイルが存在しなければ空のリストを返す
+                return items;
+            }
+
             using var package = new ExcelPackage(new FileInfo(filePath));
-            var worksheet = package.Workbook.Worksheets.First();
+            var worksheet = package.Workbook.Worksheets.FirstOrDefault();
+            if (worksheet == null)
+            {
+                // ワークシートがない場合も空リストを返す
+                return items;
+            }
+
             var rowCount = worksheet.Dimension.Rows;
 
             for (int row = 2; row <= rowCount; row++)
