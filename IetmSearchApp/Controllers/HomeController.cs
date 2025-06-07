@@ -8,7 +8,7 @@ namespace ItemSearchApp.Controllers
     {
         public IActionResult Index(string keyword)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "data", "items.xlsx");
+            var path = "/tmp/items.xlsx";
             var items = ExcelReader.LoadItemsFromExcel(path);
 
             // 価格が空でないアイテムだけを対象にする
